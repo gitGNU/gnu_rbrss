@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-15"?>
+<config>
+<category>
+<name>Informatique</name>
+<category>
+<name>Linux</name>
+ <site>
+  <name>LinuxFR</name>
+  <description>Da Linux French Page</description>
+  <url>http://linuxfr.org</url>
+  <rss>http://linuxfr.org/backend.rss</rss>
+  <icon>linuxfr.xpm</icon>
+ </site>
+ <site>
+  <name>GentooFR</name>
+  <url>http://gentoofr.org</url>
+  <rss>http://gentoofr.org/backend.rss</rss>
+  <icon>gentoofr.xpm</icon>
+ </site>
+ <site>
+  <name>Slashdot</name>
+  <url>http://slashdot.org</url>
+  <rss>http://slashdot.org/slashdot.rss</rss>
+  <icon>slashdot.xpm</icon>
+ </site>
+ <site>
+  <name>Gentoo</name>
+  <url>http://gentoo.org</url>
+  <rss>http://www.gentoo.org/rdf/en/gentoo-news.rdf</rss>
+  <icon>gentoo.xpm</icon>
+ </site>
+</category>
+</category>
+ <site>
+  <name>Le Weblog a Gr8K</name>
+  <url>http://gr8k.ath.cx/templeet/weblog/</url>
+  <rss>http://gr8k.ath.cx/templeet/weblog/weblog.rss</rss>
+ </site>
+</config>
+
