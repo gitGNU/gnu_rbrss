@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.9 2004/01/20 16:18:10 pterjan Exp $
+# $Id: rbrss,v 1.10 2004/01/20 16:36:02 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -219,6 +219,18 @@ class RbRSS
 	@glade.get_widget("druid2").set_page(@glade.get_widget("druidpagestart2"))
 	add = @glade.get_widget("addDialog")
 	add.hide
+    #TODO If a category is selected, add into it
+    url = @glade.get_widget("urlEntry").text
+    description = @glade.get_widget("descEntry").text
+    name = @glade.get_widget("nameEntry").text
+
+    n=@model.append(nil)
+    n.set_value(0,name)
+    description && n.set_value(1, description)
+    n.set_value(2, url)
+    n.set_value(3, 'site')		
+    #element.elements['refresh'] && n.set_value(5, element.elements['refresh'].text.to_i)
+    update_config
   end
 
   def on_druid2_next(page, druid)

@@ -15,3 +15,7 @@
 - display description somewhere else than in the tree. At the bottom ? On the
   right before the list of news ?
 - use HEAD requests to get last-modified instead of GET
+- Feed adding wizard :
+ - check we don't already have a feed wirh same url
+ - allow choosing refresh frequency
+ - check that the name is not empty
