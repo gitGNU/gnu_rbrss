@@ -19,3 +19,4 @@
  - check we don't already have a feed wirh same url
  - allow choosing refresh frequency
  - check that the name is not empty
+- systray icon support
