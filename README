@@ -1,29 +1,30 @@
-README
-------
+RbRSS
+=====
 
-$Id: README,v 1.4 2004/01/20 13:11:20 pterjan Exp $
+    RbRSS is a GNOME RSS feeds aggregator.
 
-Requirements:
-  Ruby
-  Ruby/GConf2
-  Ruby/Gnome2
-  Ruby/Libglade2
-  Ruby/rexml
+Requirements
+------------
 
-License and copyright:
+    Ruby >= 1.8.0:          http://www.ruby-lang.org
+    GNOME >= 2.x:           http://www.gnome.org
+    Ruby-GNOME2 >= 0.9.x:   http://ruby-gnome2.sourceforge.jp
 
-Copyright (C) 2003 Pascal Terjan <CMoi@tuxfamily.org>
+Install
+-------
 
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; either version 2 of the License, or (at your option) any later
-version.
+    $ ruby install.rb config
+    $ ruby install.rb setup
+   ($ su)
+    $ ruby install.rb install
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+Usage
+-----
 
-You should have received a copy of the GNU General Public License along with
-this program; if not, write to the Free Software Foundation, Inc., 59 Temple
-Place - Suite 330, Boston, MA  02111-1307, USA.
+    $ rbrss
 
+License
+-------
+
+    RbRSS is distributed under the terms of the GNU General Public License.
+    See the COPYING file for more information.
