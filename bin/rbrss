@@ -1,6 +1,6 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.1 2004/05/11 17:58:46 pterjan Exp $
-# Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
+# $Id: rbrss,v 1.2 2004/05/11 18:36:45 pterjan Exp $
+# Copyright (C) 2003      Pascal Terjan <pterjan@linuxfr.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
