@@ -1,2 +1,5 @@
 Pascal Terjan <pterjan@linuxfr.org>
 	Maintainer, Main Developer
+
+Parts of RbRSS are based on Alexandria http://alexandria.rubyforge.org/
+Alexandria is written by Laurent Sansonetti <lrz@gnome.org>
