@@ -1,3 +1,2 @@
-- Druid fails displaying first page and going to the last one
 - Since fetching is threaded application got really slow and interface 
   unresponsive !

@@ -1,5 +1,6 @@
 2004-01-20 Pascal Terjan <CMoi@tuxfamily.org>
 	* po/Makefile: fix for new gettext
+	* rbrss: fix Druid displaying
 
 2004-01-10 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss: clear the news text when another feed is selected

@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.7 2004/01/09 23:12:03 pterjan Exp $
+# $Id: rbrss,v 1.8 2004/01/20 15:31:24 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -180,7 +180,7 @@ class RbRSS
   ###################
   def on_addbutton_released(widget)
 	add = @glade.get_widget("addDialog")
-	add.show
+	add.show_all
   end
 
   def on_removebutton_released(widget)
@@ -214,8 +214,8 @@ class RbRSS
 	on_druid2_cancel(@glade.get_widget("druid2"))
   end
   
-  def on_druid2_finish(widget)
-	widget.set_page(@glade.get_widget("druidpagestart2"))
+  def on_druid2_finish(widget, event)
+	@glade.get_widget("druid2").set_page(@glade.get_widget("druidpagestart2"))
 	add = @glade.get_widget("addDialog")
 	add.hide
   end
