@@ -12,12 +12,6 @@
   <icon>linuxfr.xpm</icon>
  </site>
  <site>
-  <name>GentooFR</name>
-  <url>http://gentoofr.org</url>
-  <rss>http://gentoofr.org/backend.rss</rss>
-  <icon>gentoofr.xpm</icon>
- </site>
- <site>
   <name>Slashdot</name>
   <url>http://slashdot.org</url>
   <rss>http://slashdot.org/slashdot.rss</rss>
@@ -31,10 +25,5 @@
  </site>
 </category>
 </category>
- <site>
-  <name>Le Weblog a Gr8K</name>
-  <url>http://gr8k.ath.cx/templeet/weblog/</url>
-  <rss>http://gr8k.ath.cx/templeet/weblog/weblog.rss</rss>
- </site>
 </config>
 
