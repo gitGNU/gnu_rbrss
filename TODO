@@ -1,0 +1,4 @@
+- use ~/.rbrss to get config.xml instead of .
+- get site description from rss
+- fetch favicon to put it in front on the sites
+- build a preferences window
