@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.3 2003/09/06 13:37:59 pterjan Exp $
+# $Id: rbrss,v 1.4 2003/09/06 13:42:45 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -124,7 +124,7 @@ class RbRSS
 		false
 	  }
 # Segfault with Ruby/Gnome2 0.5.0
-#	  @model.set_value(iter, 4, timer)
+	  @model.set_value(iter, 4, timer)
 	end
 	return model
   end
