@@ -1,6 +1,7 @@
 2004-01-20 Pascal Terjan <CMoi@tuxfamily.org>
 	* po/Makefile: fix for new gettext
-	* rbrss: fix Druid displaying
+	* rbrss, rbrss.glade: fix Druid displaying. Implement it a little
+          more (auto-fill name and description from rss).
 
 2004-01-10 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss: clear the news text when another feed is selected

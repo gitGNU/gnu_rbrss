@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.8 2004/01/20 15:31:24 pterjan Exp $
+# $Id: rbrss,v 1.9 2004/01/20 16:18:10 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -159,7 +159,8 @@ class RbRSS
 	begin
 	  resp,data = h.get(uri.path, {'User-Agent'=>@useragent})
 	rescue
-	  return "Unable to connect to grab specified URL"
+	  puts "Unable to connect to grab specified URL"
+      return nil
 	end
 	rss = Document.new data
 	rss.elements.each("//*/channel"){
@@ -220,20 +221,20 @@ class RbRSS
 	add.hide
   end
 
-  def on_druid2_prepare(page, druid)
-	url=@glade.get_widget("urlEntry").text
-	uri = URI.parse(url)
-	h = Net::HTTP.new(uri.host)
-	begin
-	  resp,data = h.get(uri.path)
-	rescue
-	  
-	end
-	rss = Document.new data
-	description = rss.elements['description']
-	name = rss.elements['name']
-	@glade.get_widget("descEntry").text=description
-	@glade.get_widget("nameEntry").text=name
+  def on_druid2_next(page, druid)
+    url = @glade.get_widget("urlEntry").text
+    if(!url) 
+      return true
+    end
+    info = fetch_feed_info(url)
+    if(!info)
+      return true
+    end
+    description = info['description'] || ""
+    name = info['title'] || ""
+    @glade.get_widget("descEntry").text=description
+    @glade.get_widget("nameEntry").text=name
+    false
   end
 
   ##################################
