@@ -1,7 +1,7 @@
-require "rexml/document"
+require 'rexml/document'
 include REXML  # so that we don't have to prefix everything with REXML::
 
-Module RbRSS
+module RbRSS
 class FeedList
   def initialize(xmlrootnode)
     @config = xmlrootnode
@@ -11,7 +11,6 @@ class FeedList
     add_sites(@config, model, nil)
   end
 
-  private :add_sites
   def add_sites(config, model, node)
 	config.elements.each("(category|site)"){
 	  |element|
@@ -25,6 +24,7 @@ class FeedList
 	  element.expanded_name=="category" && add_sites(element, model, n)
 	}
   end
+  private :add_sites
 
   def update_from_tree(model)
 	d = 0
