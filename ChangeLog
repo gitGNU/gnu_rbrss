@@ -1,27 +1,30 @@
-2004-01-20 Pascal Terjan <CMoi@tuxfamily.org>
+2004-05-11 Pascal Terjan <pterjan@linuxfr.org>
+	* setup.rb, *: install the ruby way
+
+2004-01-20 Pascal Terjan <pterjan@linuxfr.org>
 	* po/Makefile: fix for new gettext
 	* rbrss, rbrss.glade: fix Druid displaying. Implement it a little
           more (auto-fill name and description from rss).
 
-2004-01-10 Pascal Terjan <CMoi@tuxfamily.org>
+2004-01-10 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss: clear the news text when another feed is selected
 
-2003-09-16 Pascal Terjan <CMoi@tuxfamily.org>
+2003-09-16 Pascal Terjan <pterjan@linuxfr.org>
 	* Makefile: ensure make all before make install
 	* config.xml: cleanup
 	* rbrss: copy default config.xml instead of creating an empty one
 
-2003-09-06 Pascal Terjan <CMoi@tuxfamily.org>
+2003-09-06 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss: Uncomment everything that used to segfault (Gconf and
 	treemodel modification) aka ruby/Gnome2 0.6.0 rules
 	* rbrss: Threaded news fetching and checked last-modified
 
-2003-08-27 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-27 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss: Send a User-Agent in HTTP requests
 	* rbrss, rbrss.glade: Enable using refresh button
 	* rbrss.glade: group items in toolbar
 
-2003-08-26 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-26 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss: Segfault is not when adding the Timeout but when I store it
 	in the model associated to the textview. Works without that but when
 	user refreshes a site, timeout wont be reinitialized.
@@ -29,21 +32,21 @@
 	seconds. May be better to store it in seconds and display/modify it in
 	minutes in the interface. 
 
-2003-08-19 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-19 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss.glade: Wrap news text
 
-2003-08-14 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-14 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss: Tryied to support timed refresh. Adding a Gtk::Timeout
 	make ruby segfault... I really need to get new Ruby-Gnome2
  
-2003-08-03 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-03 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss, rbrss.schemas: Get ready for GConf when it will stop
 	segfaulting. Created schemas and wrote option loading code. Also
 	auto-saved config when updated, based on /apps/rbrss/auto_save
 	* rbrss: .glade is now from /usr/share/rbrss.glade or .
 	* Makefile: we can now make install
 
-2003-08-02 Pascal Terjan <CMoi@tuxfamily.org>
+2003-08-02 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss.rb, rbrss: Renamed rbrss.rb into rbrss
 	* rbrss.rb: Added a function to grab feed info. Will be used in the
 	druid and for updating feed properties.
@@ -51,12 +54,12 @@
 	* po/Makefile:	New file
 	* po/fr.po: Updated translation
 
-2003-07-27 Pascal Terjan <CMoi@tuxfamily.org>
+2003-07-27 Pascal Terjan <pterjan@linuxfr.org>
 	* rbrss.rb, rbrss.glade: Also disabled Remove/Properties from toolbar
 	when no feed is selected. Put that into a method. Changed C_lear menu
 	item into _Remove.
 
-2003-07-26 Pascal Terjan <CMoi@tuxfamily.org> 
+2003-07-26 Pascal Terjan <pterjan@linuxfr.org> 
 	* rbrss.rb: Made update_site more independant from the interface.
 	Will allow to update news in background.
 	* rbrss.rb: Disable Properties and Clear in Edit menu when no feed is
