@@ -3,13 +3,22 @@ module RbRSS
     class MainApp < GladeBase 
       def initialize
         super("rbrss.glade")
-        @last_modified = {}
-        @models = {}
+        load_conf
+        load_feeds
+        init_ui
+      end
+
+      def load_conf
         @gconf_client = GConf::Client.new
         @conf={}
         @conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
         @conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
-        @useragent = "rbRSS/1.0"
+        @useragent = "rbRSS/1.0"        
+      end
+
+      def load_feeds
+        @models = {}
+        @last_modified = {}
         begin
           @configfile = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
         rescue
@@ -21,23 +30,19 @@ module RbRSS
           @configfile = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
           # If it still fails, let's violently exit :]
         end
-        if File.exist?("/usr/share/rbrss/rbrss.glade")
-          gladepath="/usr/share/rbrss/rbrss.glade"
-        else
-          gladepath="rbrss.glade"
-        end
-        
+        @model = Gtk::TreeStore.new(String, String, String, String, Integer, Integer) #Name, Description, URL, site/category, timer, refresh time
+        @feedlist = FeedList.new(@configfile.elements['config'])
+        @feedlist.fill_tree(@model)
+      end
+
+      def init_ui
         # Disable Properties and Clear in the Edit menu until a feed is selected
         set_feed_selected(FALSE)
         
-        @model = Gtk::TreeStore.new(String, String, String, String, Integer, Integer) #Name, Description, URL, site/category, timer, refresh time
         col_cat = Gtk::TreeViewColumn.new("Nom", Gtk::CellRendererText.new, {:text => 0})
         @treeview2.append_column(col_cat)
         col_name = Gtk::TreeViewColumn.new("Description", Gtk::CellRendererText.new, {:text => 1})
         @treeview2.append_column(col_name)
-
-        @feedlist = FeedList.new(@configfile.elements['config'])
-        @feedlist.fill_tree(@model)
         
         @treeview2.set_model(@model)
         @treeview2.set_headers_clickable(FALSE)
