@@ -1,3 +1,6 @@
+2003-09-16 Pascal Terjan <CMoi@tuxfamily.org>
+	* Makefile: ensure make all before make install
+
 2003-09-06 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss: Uncomment everything that used to segfault (Gconf and
 	treemodel modification) aka ruby/Gnome2 0.6.0 rules

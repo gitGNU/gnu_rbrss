@@ -1,7 +1,7 @@
 all:
 	make -C po
 
-install:
+install: all
 	mkdir -p $(DESTDIR)/usr/share/rbrss/
 	cp -f rbrss.glade *.png config.xml $(DESTDIR)/usr/share/rbrss/
 	mkdir -p $(DESTDIR)/usr/share/locale/fr/LC_MESSAGES/
