@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2003-09-16 01:25+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../rbrss.strings:8
+msgid "rbRSS"
+msgstr ""
+
+#: ../rbrss.strings:9
+msgid "_Remove"
+msgstr ""
+
+#: ../rbrss.strings:10
+msgid "Copyright (c) 2003 Pascal Terjan <CMoi@tuxfamily.org>"
+msgstr ""
+
+#: ../rbrss.strings:11
+msgid "RbRSS is a RSS feeds aggegator, written using Ruby/Gnome2 and Glade. "
+msgstr ""
+
+#: ../rbrss.strings:12
+msgid "translator_credits"
+msgstr ""
+
+#: ../rbrss.strings:13 ../rbrss.strings:14
+msgid "Add a new RSS source"
+msgstr ""
+
+#: ../rbrss.strings:15
+msgid ""
+"This wizard will enable you to add a new source from which rbRSS will fetch "
+"news."
+msgstr ""
+
+#: ../rbrss.strings:16
+msgid "Enter the source URL"
+msgstr ""
+
+#: ../rbrss.strings:17
+msgid "*"
+msgstr ""
+
+#: ../rbrss.strings:18
+msgid "Source URL :"
+msgstr ""
+
+#: ../rbrss.strings:19
+msgid "Source parameters"
+msgstr ""
+
+#: ../rbrss.strings:20
+msgid "Adding finished"
+msgstr ""
+
+#: ../rbrss.strings:21
+msgid "Congratulations, the RSS source was added !"
+msgstr ""
