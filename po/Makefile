@@ -8,7 +8,7 @@ po:	$(PO)
 mo: $(MO)
 
 strings.pot:	../rbrss.strings
-	xgettext -a -o strings.pot ../rbrss.strings
+	xgettext --from-code=UTF8 -C -o strings.pot ../rbrss.strings
 
 %.po:	strings.pot
 	msgmerge -v -o $@x $@ $<
