@@ -378,4 +378,256 @@ Pascal Terjan &lt;CMoi@tuxfamily.org&gt;</property>
   <property name="translator_credits" translatable="yes">translator_credits</property>
 </widget>
 
+<widget class="GtkWindow" id="addDialog">
+  <property name="title" translatable="yes">Ajout d'une source RSS</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="modal">True</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+
+  <child>
+    <widget class="GnomeDruid" id="druid2">
+      <property name="border_width">4</property>
+      <property name="visible">True</property>
+      <property name="show_help">False</property>
+
+      <child>
+	<widget class="GnomeDruidPageEdge" id="druidpagestart2">
+	  <property name="visible">True</property>
+	  <property name="position">GNOME_EDGE_START</property>
+	  <property name="title" translatable="yes">Ajout d'une source RSS</property>
+	</widget>
+      </child>
+
+      <child>
+	<widget class="GnomeDruidPageStandard" id="druidpagestandard2">
+	  <property name="visible">True</property>
+	  <property name="title" translatable="yes"></property>
+
+	  <child internal-child="vbox">
+	    <widget class="GtkVBox" id="druid-vbox2">
+	      <property name="border_width">16</property>
+	      <property name="visible">True</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">6</property>
+
+	      <child>
+		<widget class="GtkFixed" id="fixed1">
+		  <property name="visible">True</property>
+
+		  <child>
+		    <widget class="GtkEntry" id="entryURL">
+		      <property name="width_request">440</property>
+		      <property name="height_request">24</property>
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="editable">True</property>
+		      <property name="visibility">True</property>
+		      <property name="max_length">0</property>
+		      <property name="text" translatable="yes"></property>
+		      <property name="has_frame">True</property>
+		      <property name="invisible_char" translatable="yes">*</property>
+		      <property name="activates_default">True</property>
+		    </widget>
+		    <packing>
+		      <property name="x">8</property>
+		      <property name="y">56</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label1">
+		      <property name="width_request">232</property>
+		      <property name="height_request">24</property>
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Entrez l'URL du fichier RSS à ajouter :</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		    <packing>
+		      <property name="x">0</property>
+		      <property name="y">32</property>
+		    </packing>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+	    </widget>
+	  </child>
+	</widget>
+      </child>
+
+      <child>
+	<widget class="GnomeDruidPageStandard" id="druidpagestandard3">
+	  <property name="visible">True</property>
+	  <property name="title" translatable="yes"></property>
+
+	  <child internal-child="vbox">
+	    <widget class="GtkVBox" id="druid-vbox3">
+	      <property name="border_width">16</property>
+	      <property name="visible">True</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">6</property>
+
+	      <child>
+		<widget class="GtkFixed" id="fixed2">
+		  <property name="visible">True</property>
+
+		  <child>
+		    <widget class="GtkEntry" id="entryTitle">
+		      <property name="width_request">158</property>
+		      <property name="height_request">23</property>
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="editable">True</property>
+		      <property name="visibility">True</property>
+		      <property name="max_length">0</property>
+		      <property name="text" translatable="yes"></property>
+		      <property name="has_frame">True</property>
+		      <property name="invisible_char" translatable="yes">*</property>
+		      <property name="activates_default">False</property>
+		    </widget>
+		    <packing>
+		      <property name="x">96</property>
+		      <property name="y">56</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkEntry" id="entryDesc">
+		      <property name="width_request">158</property>
+		      <property name="height_request">23</property>
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="editable">True</property>
+		      <property name="visibility">True</property>
+		      <property name="max_length">0</property>
+		      <property name="text" translatable="yes"></property>
+		      <property name="has_frame">True</property>
+		      <property name="invisible_char" translatable="yes">*</property>
+		      <property name="activates_default">False</property>
+		    </widget>
+		    <packing>
+		      <property name="x">96</property>
+		      <property name="y">96</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GnomeIconEntry" id="iconentry1">
+		      <property name="width_request">60</property>
+		      <property name="height_request">60</property>
+		      <property name="visible">True</property>
+		      <property name="max_saved">10</property>
+		    </widget>
+		    <packing>
+		      <property name="x">96</property>
+		      <property name="y">136</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label4">
+		      <property name="width_request">48</property>
+		      <property name="height_request">16</property>
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Icone</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		    <packing>
+		      <property name="x">24</property>
+		      <property name="y">152</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label3">
+		      <property name="width_request">72</property>
+		      <property name="height_request">16</property>
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Description</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="mnemonic_widget">entryDesc</property>
+		    </widget>
+		    <packing>
+		      <property name="x">24</property>
+		      <property name="y">104</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label2">
+		      <property name="width_request">34</property>
+		      <property name="height_request">16</property>
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Titre</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		      <property name="mnemonic_widget">entryTitle</property>
+		    </widget>
+		    <packing>
+		      <property name="x">24</property>
+		      <property name="y">56</property>
+		    </packing>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+	    </widget>
+	  </child>
+	</widget>
+      </child>
+
+      <child>
+	<widget class="GnomeDruidPageEdge" id="druidpagefinish2">
+	  <property name="visible">True</property>
+	  <property name="position">GNOME_EDGE_FINISH</property>
+	  <property name="title" translatable="yes">Source ajoutée</property>
+	  <property name="text" translatable="yes">Félicitations,
+la source RSS a été ajoutée avec succès.</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+</widget>
+
 </glade-interface>

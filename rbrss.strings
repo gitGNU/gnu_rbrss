@@ -1,0 +1,24 @@
+/*
+ * Chaînes de caractères à traduire générées par
+ * Glade. Ajouter ce fichier au fichier POTFILE.in
+ * de votre projet. NE PAS compiler ce fichier
+ * avec le reste de votre application.
+ */
+
+gchar *s = N_("rbRSS");
+gchar *s = N_("_Nouveau");
+gchar *s = N_("Copyright 2003\n"
+              "Pascal Terjan <CMoi@tuxfamily.org>");
+gchar *s = N_("translator_credits");
+gchar *s = N_("Ajout d'une source RSS");
+gchar *s = N_("Ajout d'une source RSS");
+gchar *s = N_("*");
+gchar *s = N_("Entrez l'URL du fichier RSS à ajouter :");
+gchar *s = N_("*");
+gchar *s = N_("*");
+gchar *s = N_("Icone");
+gchar *s = N_("Description");
+gchar *s = N_("Titre");
+gchar *s = N_("Source ajoutée");
+gchar *s = N_("Félicitations,\n"
+              "la source RSS a été ajoutée avec succès.");
