@@ -5,6 +5,7 @@ require 'gnome2'
 require 'gconf2'
 require 'uri'
 require "fileutils"
+require 'net/http'
 
 require 'rbrss/ui/glade_base.rb'
 require 'rbrss/ui/main.rb'
