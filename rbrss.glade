@@ -201,19 +201,43 @@
 	  <property name="tooltips">True</property>
 
 	  <child>
-	    <placeholder/>
+	    <widget class="button" id="button1">
+	      <property name="visible">True</property>
+	      <property name="label">gtk-remove</property>
+	      <property name="use_stock">True</property>
+	    </widget>
 	  </child>
 
 	  <child>
-	    <placeholder/>
+	    <widget class="button" id="button2">
+	      <property name="visible">True</property>
+	      <property name="label">gtk-add</property>
+	      <property name="use_stock">True</property>
+	    </widget>
 	  </child>
 
 	  <child>
-	    <placeholder/>
+	    <widget class="button" id="button3">
+	      <property name="visible">True</property>
+	      <property name="label">gtk-properties</property>
+	      <property name="use_stock">True</property>
+	    </widget>
 	  </child>
 
 	  <child>
-	    <placeholder/>
+	    <widget class="button" id="button4">
+	      <property name="visible">True</property>
+	      <property name="label">gtk-refresh</property>
+	      <property name="use_stock">True</property>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="button" id="button5">
+	      <property name="visible">True</property>
+	      <property name="label">gtk-preferences</property>
+	      <property name="use_stock">True</property>
+	    </widget>
 	  </child>
 	</widget>
 	<packing>
