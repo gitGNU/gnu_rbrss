@@ -36,7 +36,16 @@ class RbRSS
 	}
   end
   def initialize
-	config = Document.new File.new('config.xml')
+    	begin
+	  config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+	rescue
+	  Dir.mkdir(ENV["HOME"]+'/.rbrss')
+	  f = File.new(ENV["HOME"]+'/.rbrss/config.xml','w')
+	  f.write('<?xml version="1.0" encoding="iso-8859-15"?><config></config>')
+	  f.close()
+	  config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+	  # If it still fails, let's violently exit :]
+	end
 	$glade = GladeXML.new("rbrss.glade") {|handler| method(handler)}
 	@treeview = $glade.get_widget("treeview2")
 	$model = Gtk::TreeStore.new(String, String, String)
