@@ -3,9 +3,6 @@ module RbRSS
     class MainApp < GladeBase 
       def initialize
         super("rbrss.glade")
-      end
-     
-      def old_init 
         @last_modified = {}
         @models = {}
         @gconf_client = GConf::Client.new
@@ -39,7 +36,7 @@ module RbRSS
         col_name = Gtk::TreeViewColumn.new("Description", Gtk::CellRendererText.new, {:text => 1})
         @treeview2.append_column(col_name)
 
-        @feedlist = FeedList.new(@config.elements['config'])
+        @feedlist = FeedList.new(@configfile.elements['config'])
         @feedlist.fill_tree(@model)
         
         @treeview2.set_model(@model)
@@ -48,6 +45,93 @@ module RbRSS
         
         col = Gtk::TreeViewColumn.new("Titre", Gtk::CellRendererText.new, {:text => 0})
         @treeview3.append_column(col)
+      end
+
+      def update_site(iter, event)
+        Thread.new {
+          do_update_site(iter, event)
+        }
+      end
+
+      def do_update_site(iter, event)
+        url = @model.get_value(iter, 2) || return
+        timer = @model.get_value(iter, 4)
+        refresh = @model.get_value(iter, 5)
+        if(timer && timer!=0)
+          Gtk.timeout_remove(timer)
+        end
+        uri = URI.parse(url)
+        h = Net::HTTP.new(uri.host)
+        begin
+          resp,data = h.get(uri.path, {'User-Agent'=>@useragent})
+        rescue
+          puts "You are not connected, the server is down or the adress is wrong."
+          return
+        end
+        resp.each_header{
+          |header, val|
+          if header=="last-modified"
+            if @last_modified[url] == val
+              if(refresh)
+                timer = Gtk.timeout_add(refresh*60000){
+                  update_site(iter, nil)
+                  false
+                }
+                @model.set_value(iter, 4, timer)
+              end
+              return
+            end
+            @last_modified[url] = val
+          end
+        }
+        rss = Document.new data
+        # Should check what needs to be added, meanwhile...
+        @models = {} unless @models
+        model = @models[url]
+        if model==nil
+          model = Gtk::TreeStore.new(String, String, String)
+          @models[url]=model
+          @treeview3.set_model(@models[url]) if @treeview3.model==nil 
+        end
+        model.clear
+        rss.elements.each("//*/item"){
+          |element|
+          element.elements['title'] || next
+          n=model.append(nil)
+          n.set_value(0, element.elements['title'].text)
+          element.elements['description'] && n.set_value(1, element.elements['description'].text)
+          element.elements['url'] && n.set_value(2, element.elements['url'].text)
+        }
+        if(refresh)
+          timer = Gtk.timeout_add(refresh*60000){
+            update_site(iter, nil)
+            false
+          }
+          # Segfault with Ruby/Gnome2 0.5.0
+          @model.set_value(iter, 4, timer)
+        end
+      end
+
+      def fetch_feed_info(url)
+        uri = URI.parse(url)
+        h = Net::HTTP.new(uri.host)
+        begin
+          resp,data = h.get(uri.path, {'User-Agent'=>@useragent})
+        rescue
+          puts "Unable to connect to grab specified URL"
+          return nil
+        end
+        rss = Document.new data
+        rss.elements.each("//*/channel"){
+          |element|
+          info = {}
+          element.elements.each{
+            |field| 
+            info[field.name] = field.text
+          }
+          return info
+        }
+        return {}
       end
 
       ###################
@@ -147,9 +231,8 @@ module RbRSS
         textview.buffer.text=''
 
         # Display the matching news list
-        tv = @glade.get_widget("treeview3")
         if (@models)
-          tv.set_model(@models[url])
+          @treeview3.set_model(@models[url])
         end
         update_site(iter, nil)
         return

@@ -15,7 +15,7 @@ class FeedList
 	config.elements.each("(category|site)"){
 	  |element|
 	  element.elements['name'] || next
-	  n=@model.append(node)
+	  n=model.append(node)
 	  n.set_value(0, element.elements['name'].text)
 	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
 	  element.elements['rss'] && n.set_value(2, element.elements['rss'].text)
@@ -30,18 +30,18 @@ class FeedList
 	d = 0
 	s = ""
 	type = ""
-	@model.each{
+	model.each{
 	  |plop|
 	  iter=plop[2]
-	  name = @model.get_value(iter, 0)
-	  d2=@model.iter_depth(iter)
+	  name = model.get_value(iter, 0)
+	  d2=model.iter_depth(iter)
 	  while (d2<d) ||((d2==d) && (type=="category"))
 		s+="</category>\n"
 		d-=1
 	  end
-	  desc = @model.get_value(iter, 1)
-	  url = @model.get_value(iter, 2)
-	  type = @model.get_value(iter, 3) # category/site
+	  desc = model.get_value(iter, 1)
+	  url = model.get_value(iter, 2)
+	  type = model.get_value(iter, 3) # category/site
 	  s+="<"+type+">\n"
 	  s+="<name>"+name+"</name>\n"
 	  s+="<description>"+desc+"</description>\n" if desc

@@ -2,6 +2,10 @@ require 'gdk_pixbuf2'
 require 'libglade2'
 require 'gnome2'
 
+require 'gconf2'
+require 'uri'
+require "fileutils"
+
 require 'rbrss/ui/glade_base.rb'
 require 'rbrss/ui/main.rb'
 
