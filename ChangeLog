@@ -1,3 +1,23 @@
+2003-08-27 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss: Send a User-Agent in HTTP requests
+	* rbrss, rbrss.glade: Enable using refresh button
+	* rbrss.glade: group items in toolbar
+
+2003-08-26 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss: Segfault is not when adding the Timeout but when I store it
+	in the model associated to the textview. Works without that but when
+	user refreshes a site, timeout wont be reinitialized.
+	* rbrss: Refresh delay in config file is now in minutes and no more in
+	seconds. May be better to store it in seconds and display/modify it in
+	minutes in the interface. 
+
+2003-08-19 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss.glade: Wrap news text
+
+2003-08-14 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss: Tryied to support timed refresh. Adding a Gtk::Timeout
+	make ruby segfault... I really need to get new Ruby-Gnome2
+ 
 2003-08-03 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss, rbrss.schemas: Get ready for GConf when it will stop
 	segfaulting. Created schemas and wrote option loading code. Also

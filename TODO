@@ -3,16 +3,15 @@
 - build a preferences window
 - build a feed options window
 - draw an icon
-- check feeds periodically in background and use bold font for feeds with new
-  items
+- use bold font for feeds with new items
 - handle forms in RSS
 - config.xml -> sites.xml and use GConf for config
 - have a default config file
 - use gtkhtml for displaying news
-- write an install script
 - open an external browser on sites ans news (and chose it in preferences)
 - display status in a statusbar instead of console
 - find a nice name
 - add easy way to navigate (next unread...)
 - display description somewhere else than in the tree. At the bottom ? On the
   right before the list of news ?
+- use last modification time and HEAD requests

@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.1 2003/08/09 17:22:53 pterjan Exp $
+# $Id: rbrss,v 1.2 2003/08/31 13:36:39 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,7 @@ class RbRSS
 	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
 	  element.elements['rss'] && n.set_value(2, element.elements['rss'].text)
 	  n.set_value(3, element.expanded_name)		
+	  element.elements['refresh'] && n.set_value(5, element.elements['refresh'].text.to_i)
 	  element.expanded_name=="category" && add_sites(element, model, n)
 	}
   end
@@ -43,6 +44,7 @@ class RbRSS
 #	@conf={}
 #	@conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
 #	@conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
+	@useragent = "rbRSS/1.0"
 	begin
 	  @config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
 	rescue
@@ -67,7 +69,7 @@ class RbRSS
 	set_feed_selected(FALSE)
 
 	treeview = @glade.get_widget("treeview2")
-	@model = Gtk::TreeStore.new(String, String, String, String) #Name, Description, URL, site/category
+	@model = Gtk::TreeStore.new(String, String, String, String, Integer, Integer) #Name, Description, URL, site/category, timer, refresh time
 	col_cat = Gtk::TreeViewColumn.new("Nom", Gtk::CellRendererText.new, {:text => 0})
 	treeview.append_column(col_cat)
 	col_name = Gtk::TreeViewColumn.new("Description", Gtk::CellRendererText.new, {:text => 1})
@@ -86,6 +88,11 @@ class RbRSS
 
   def update_site(iter, event)
 	url = @model.get_value(iter, 2) || return
+	timer = @model.get_value(iter, 4)
+	refresh = @model.get_value(iter, 5)
+	if(timer && timer!=0)
+	  Gtk.timeout_remove(timer)
+	end
 	@models = {} unless @models
 	model = @models[url]
 	if model==nil
@@ -95,9 +102,9 @@ class RbRSS
 	uri = URI.parse(url)
 	h = Net::HTTP.new(uri.host)
 	begin
-	  resp,data = h.get(uri.path)
+	  resp,data = h.get(uri.path, {'User-Agent'=>@useragent})
 	rescue
-	puts "You are not connected, the server is down or the adress is wrong."
+	  puts "You are not connected, the server is down or the adress is wrong."
 	  return
 	end
 	rss = Document.new data
@@ -111,6 +118,14 @@ class RbRSS
 	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
 	  element.elements['url'] && n.set_value(2, element.elements['url'].text)
 	}
+	if(refresh)
+	  timer = Gtk.timeout_add(refresh*60000){
+		update_site(iter, nil)
+		false
+	  }
+# Segfault with Ruby/Gnome2 0.5.0
+#	  @model.set_value(iter, 4, timer)
+	end
 	return model
   end
 
@@ -118,7 +133,7 @@ class RbRSS
 	uri = URI.parse(url)
 	h = Net::HTTP.new(uri.host)
 	begin
-	  resp,data = h.get(uri.path)
+	  resp,data = h.get(uri.path, {'User-Agent'=>@useragent})
 	rescue
 	  return "Unable to connect to grab specified URL"
 	end
@@ -153,8 +168,18 @@ class RbRSS
 	@glade.get_widget("effacer1").set_sensitive(bool)
 	@glade.get_widget("button1").set_sensitive(bool)
 	@glade.get_widget("button3").set_sensitive(bool)
+	@glade.get_widget("button4").set_sensitive(bool)
   end
-  
+
+  def on_refreshbutton_released(widget)
+	treeview = @glade.get_widget("treeview2")
+	iter = treeview.selection.selected || return
+	if model = update_site(iter, nil)
+	  tv = @glade.get_widget("treeview3")
+	  tv.set_model(model)
+	end
+  end
+
   #######################
   # Source adding druid #
   #######################
@@ -301,7 +326,6 @@ class RbRSS
   end
 end
 
-Gnome::Program.new("rbsss", "0.1")
+Gnome::Program.new("rbrss", "0.1")
 RbRSS.new
 Gtk.main
-
