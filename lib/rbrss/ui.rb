@@ -3,7 +3,7 @@ require 'libglade2'
 require 'gnome2'
 
 require 'rbrss/ui/glade_base.rb'
-require 'rbrss/ui/main_app.rb'
+require 'rbrss/ui/main.rb'
 
 module RbRSS
 module UI
