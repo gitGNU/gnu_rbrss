@@ -9,7 +9,6 @@ module RbRSS
 module UI
     def self.main
         Gnome::Program.new(TITLE, VERSION)
-        Icons.init
         MainApp.new
         Gtk.main
     end
