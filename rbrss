@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.2 2003/08/31 13:36:39 pterjan Exp $
+# $Id: rbrss,v 1.3 2003/09/06 13:37:59 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #
 
 require 'net/http'
-#require 'gconf2' # implies glib2
+require 'gconf2' # implies glib2
 require 'libglade2' # implies gtk2 and gnome2
 require "rexml/document"
 require 'uri'
@@ -40,10 +40,10 @@ class RbRSS
 	}
   end
   def initialize
-#	@gconf_client = GConf::Client.new
-#	@conf={}
-#	@conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
-#	@conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
+	@gconf_client = GConf::Client.new
+	@conf={}
+	@conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
+	@conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
 	@useragent = "rbRSS/1.0"
 	begin
 	  @config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
