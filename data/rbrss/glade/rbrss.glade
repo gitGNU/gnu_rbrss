@@ -360,9 +360,9 @@
   <property name="destroy_with_parent">False</property>
   <property name="icon">../icons/rbrss.png</property>
   <property name="logo">../icons/rbrss.png</property>
-  <property name="copyright" translatable="yes">Copyright (c) 2003-2004 Pascal Terjan &lt;CMoi@tuxfamily.org&gt;</property>
+  <property name="copyright" translatable="yes">Copyright (c) 2003-2004 Pascal Terjan &lt;pterjan@linuxfr.org&gt;</property>
   <property name="comments" translatable="yes">RbRSS is a RSS feeds aggegator, written using Ruby/Gnome2 and Glade. </property>
-  <property name="authors">Pascal Terjan &lt;CMoi@tuxfamily.org&gt;</property>
+  <property name="authors">Pascal Terjan &lt;pterjan@linuxfr.org&gt;</property>
   <property name="translator_credits" translatable="yes">translator_credits</property>
 </widget>
 
