@@ -6,19 +6,16 @@
  */
 
 gchar *s = N_("rbRSS");
-gchar *s = N_("_Nouveau");
-gchar *s = N_("Copyright 2003\n"
-              "Pascal Terjan <CMoi@tuxfamily.org>");
+gchar *s = N_("_Remove");
+gchar *s = N_("Copyright (c) 2003 Pascal Terjan <CMoi@tuxfamily.org>");
+gchar *s = N_("RbRSS is a RSS feeds aggegator, written using Ruby/Gnome2 and Glade. ");
 gchar *s = N_("translator_credits");
-gchar *s = N_("Ajout d'une source RSS");
-gchar *s = N_("Ajout d'une source RSS");
+gchar *s = N_("Add a new RSS source");
+gchar *s = N_("Add a new RSS source");
+gchar *s = N_("This wizard will enable you to add a new source from which rbRSS will fetch news.");
+gchar *s = N_("Enter the source URL");
 gchar *s = N_("*");
-gchar *s = N_("Entrez l'URL du fichier RSS à ajouter :");
-gchar *s = N_("*");
-gchar *s = N_("*");
-gchar *s = N_("Icone");
-gchar *s = N_("Description");
-gchar *s = N_("Titre");
-gchar *s = N_("Source ajoutée");
-gchar *s = N_("Félicitations,\n"
-              "la source RSS a été ajoutée avec succès.");
+gchar *s = N_("Source URL :");
+gchar *s = N_("Source parameters");
+gchar *s = N_("Adding finished");
+gchar *s = N_("Congratulations, the RSS source was added !");

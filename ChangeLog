@@ -1,0 +1,30 @@
+2003-08-03 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss, rbrss.schemas: Get ready for GConf when it will stop
+	segfaulting. Created schemas and wrote option loading code. Also
+	auto-saved config when updated, based on /apps/rbrss/auto_save
+	* rbrss: .glade is now from /usr/share/rbrss.glade or .
+	* Makefile: we can now make install
+
+2003-08-02 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss.rb, rbrss: Renamed rbrss.rb into rbrss
+	* rbrss.rb: Added a function to grab feed info. Will be used in the
+	druid and for updating feed properties.
+	* rbrss.svg: Cleanup
+	* po/Makefile:	New file
+	* po/fr.po: Updated translation
+
+2003-07-27 Pascal Terjan <CMoi@tuxfamily.org>
+	* rbrss.rb, rbrss.glade: Also disabled Remove/Properties from toolbar
+	when no feed is selected. Put that into a method. Changed C_lear menu
+	item into _Remove.
+
+2003-07-26 Pascal Terjan <CMoi@tuxfamily.org> 
+	* rbrss.rb: Made update_site more independant from the interface.
+	Will allow to update news in background.
+	* rbrss.rb: Disable Properties and Clear in Edit menu when no feed is
+	selected.
+	* rbrss.glade, rbrss.png, rbrss.svg: Added an icon
+	* TODO: Added a lot of stuff
+	* rbrss.glade, rbrss.rb: Filled in about dialog
+	* po/fr.po: Updated translation
+	* ChangeLog: Created a ChangeLog :-)

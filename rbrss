@@ -1,0 +1,307 @@
+#!/usr/bin/ruby 
+# $Id: rbrss,v 1.1 2003/08/09 17:22:53 pterjan Exp $
+# Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
+
+require 'net/http'
+#require 'gconf2' # implies glib2
+require 'libglade2' # implies gtk2 and gnome2
+require "rexml/document"
+require 'uri'
+include REXML  # so that we don't have to prefix everything with REXML::
+
+class RbRSS 
+  def add_sites(config, model, node)
+	config.elements.each("(category|site)"){
+	  |element|
+	  element.elements['name'] || next
+	  n=@model.append(node)
+	  n.set_value(0, element.elements['name'].text)
+	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
+	  element.elements['rss'] && n.set_value(2, element.elements['rss'].text)
+	  n.set_value(3, element.expanded_name)		
+	  element.expanded_name=="category" && add_sites(element, model, n)
+	}
+  end
+  def initialize
+#	@gconf_client = GConf::Client.new
+#	@conf={}
+#	@conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
+#	@conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
+	begin
+	  @config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+	rescue
+	  begin
+		Dir.mkdir(ENV["HOME"]+'/.rbrss')
+	  rescue Errno::EEXIST
+	  end
+	  f = File.new(ENV["HOME"]+'/.rbrss/config.xml','w')
+	  f.write('<?xml version="1.0" encoding="iso-8859-15"?><config></config>')
+	  f.close()
+	  @config = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+	  # If it still fails, let's violently exit :]
+	end
+	if File.exist?("/usr/share/rbrss/rbrss.glade")
+	  gladepath="/usr/share/rbrss/rbrss.glade"
+	else
+	  gladepath="rbrss.glade"
+	end
+	@glade = GladeXML.new(gladepath, nil, "rbrss") {|handler| method(handler)}
+
+	# Disable Properties and Clear in the Edit menu until a feed is selected
+	set_feed_selected(FALSE)
+
+	treeview = @glade.get_widget("treeview2")
+	@model = Gtk::TreeStore.new(String, String, String, String) #Name, Description, URL, site/category
+	col_cat = Gtk::TreeViewColumn.new("Nom", Gtk::CellRendererText.new, {:text => 0})
+	treeview.append_column(col_cat)
+	col_name = Gtk::TreeViewColumn.new("Description", Gtk::CellRendererText.new, {:text => 1})
+	treeview.append_column(col_name)
+
+	add_sites(@config.elements['config'], @model, nil)
+
+	treeview.set_model(@model)
+	treeview.set_headers_clickable(FALSE)
+	treeview.columns_autosize()
+
+	tv = @glade.get_widget("treeview3")
+	col = Gtk::TreeViewColumn.new("Titre", Gtk::CellRendererText.new, {:text => 0})
+	tv.append_column(col)
+  end
+
+  def update_site(iter, event)
+	url = @model.get_value(iter, 2) || return
+	@models = {} unless @models
+	model = @models[url]
+	if model==nil
+	  model = Gtk::TreeStore.new(String, String, String)
+	  @models[url]=model
+	end
+	uri = URI.parse(url)
+	h = Net::HTTP.new(uri.host)
+	begin
+	  resp,data = h.get(uri.path)
+	rescue
+	puts "You are not connected, the server is down or the adress is wrong."
+	  return
+	end
+	rss = Document.new data
+	# Should check what needs to be added, meanwhile...
+	model.clear
+	rss.elements.each("//*/item"){
+	  |element|
+	  element.elements['title'] || next
+	  n=model.append(nil)
+	  n.set_value(0, element.elements['title'].text)
+	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
+	  element.elements['url'] && n.set_value(2, element.elements['url'].text)
+	}
+	return model
+  end
+
+  def fetch_feed_info(url)
+	uri = URI.parse(url)
+	h = Net::HTTP.new(uri.host)
+	begin
+	  resp,data = h.get(uri.path)
+	rescue
+	  return "Unable to connect to grab specified URL"
+	end
+	rss = Document.new data
+	rss.elements.each("//*/channel"){
+	  |element|
+	  info = {}
+	  element.elements.each{
+		|field| 
+		info[field.name] = field.text
+	  }
+	  return info
+	}
+	return {}
+  end
+
+  
+  ###################
+  # Toolbar buttons #
+  ###################
+  def on_addbutton_released(widget)
+	add = @glade.get_widget("addDialog")
+	add.show
+  end
+
+  def on_removebutton_released(widget)
+	on_effacer1_activate(nil)
+  end
+
+  def set_feed_selected(bool)
+	@glade.get_widget("properties1").set_sensitive(bool)
+	@glade.get_widget("effacer1").set_sensitive(bool)
+	@glade.get_widget("button1").set_sensitive(bool)
+	@glade.get_widget("button3").set_sensitive(bool)
+  end
+  
+  #######################
+  # Source adding druid #
+  #######################
+  def on_druid2_cancel(widget)
+	widget.set_page(@glade.get_widget("druidpagestart2"))
+	add = @glade.get_widget("addDialog")
+	add.hide
+  end
+  
+  def on_druid2_close(widget, event)
+	on_druid2_cancel(@glade.get_widget("druid2"))
+  end
+  
+  def on_druid2_finish(widget)
+	widget.set_page(@glade.get_widget("druidpagestart2"))
+	add = @glade.get_widget("addDialog")
+	add.hide
+  end
+
+  def on_druid2_prepare(page, druid)
+	url=@glade.get_widget("urlEntry").text
+	uri = URI.parse(url)
+	h = Net::HTTP.new(uri.host)
+	begin
+	  resp,data = h.get(uri.path)
+	rescue
+	  
+	end
+	rss = Document.new data
+	description = rss.elements['description']
+	name = rss.elements['name']
+	@glade.get_widget("descEntry").text=description
+	@glade.get_widget("nameEntry").text=name
+  end
+
+  ##################################
+  # Tree and lists events handling #
+  ##################################
+
+  def on_news_activated(widget, plop)
+	model=widget.model || return
+	iter = widget.selection.selected
+	desc = model.get_value(iter, 1) ||  model.get_value(iter, 2) || "No description nor url for this news"
+	buffer=Gtk::TextBuffer.new
+	buffer.set_text(desc)
+	textview=@glade.get_widget("news")
+	textview.set_buffer(buffer)
+  end
+
+  def on_feed_activated(widget,plop)
+	set_feed_selected(TRUE)
+	iter = widget.selection.selected || return
+	if model = update_site(iter, plop)
+	  tv = @glade.get_widget("treeview3")
+	  tv.set_model(model)
+	end
+	return
+  end
+
+  def on_treeview2_key_release_event(treeview, event)
+	on_effacer1_activate(nil) if event.keyval==65535
+  end
+
+  def on_treeview2_drag_end(treeview, dragcontext)
+	# Parse new model to update config object
+	set_feed_selected(FALSE)
+	update_config
+  end
+  def update_config
+	d=0
+	s = ""
+	type = ""
+	@model.each{
+	  |plop|
+	  iter=plop[2]
+	  name = @model.get_value(iter, 0)
+	  d2=@model.iter_depth(iter)
+	  while (d2<d) ||((d2==d) && (type=="category"))
+		s+="</category>\n"
+		d-=1
+	  end
+	  desc = @model.get_value(iter, 1)
+	  url = @model.get_value(iter, 2)
+	  type = @model.get_value(iter, 3) # category/site
+	  s+="<"+type+">\n"
+	  s+="<name>"+name+"</name>\n"
+	  s+="<description>"+desc+"</description>\n" if desc
+	  s+="<url>"+url+"</url>\n" if url
+	  s+="</site>\n" if type=="site"
+	  d=d2
+	  next #to avoid stopping the loop when d2==0...
+	}
+	while d>0||(d==0&&type=="category")
+	  s+="</category>\n"
+	  d-=1
+	end
+	begin
+	  @config=Document.new "<?xml version=\"1.0\" encoding=\"iso-8859-15\"?>\n<config>"+s+"</config>"
+	rescue REXML::ParseException
+	  puts "Invalid XML : "+s
+	end
+#	on_save1_activate(nil) if(@conf["auto_save"])
+  end
+
+  ##############
+  # Menu items #
+  ##############
+
+  def on_save1_activate(widget)
+	@config.write(File.new(ENV["HOME"]+'/.rbrss/config.xml','w'))
+  end
+
+  def on_preferences1_activate(widget)
+  end
+
+  def on_about1_activate(widget)
+	@glade.get_widget("about2").show
+  end
+  
+  def on_effacer1_activate(widget)
+	tv = @glade.get_widget("treeview2")
+	iter = tv.selection.selected || return
+	@models.delete(url) if url = @model.get_value(iter, 2) && @models[url]
+	@model.remove(iter)
+	@glade.get_widget("properties1").set_sensitive(FALSE)
+	@glade.get_widget("effacer1").set_sensitive(FALSE)
+	update_config
+  end
+  
+  def on_copy1_activate(widget)
+  end
+  
+  def on_open1_activate(widget)
+  end
+  
+  def on_properties1_activate(widget)
+  end
+  
+  def on_save_as1_activate(widget)
+  end
+
+  def quit
+    Gtk.main_quit
+  end
+end
+
+Gnome::Program.new("rbsss", "0.1")
+RbRSS.new
+Gtk.main
+

@@ -1,0 +1,28 @@
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/apps/rbrss/auto_save</key>
+      <applyto>/apps/rbrss/auto_save</applyto>
+      <owner>rbrss</owner>
+      <type>bool</type>
+      <default>FALSE</default>
+      <locale name="C">
+        <short>Whether or not to save options when they change</short>
+        <long>If enabled options are saved immediatly after you change
+  an option, add or remove a source, ...</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/rbrss/settings/cache_dir</key>
+      <applyto>/apps/rbrss/cache_dir</applyto>
+      <owner>rbrss</owner>
+      <type>string</type>
+      <default>~/.rbrss</default>
+      <locale name="C">
+        <short>Where to save the cache files</short>
+        <long>Directory name where data will be saved between runs of RbRSS</long>
+      </locale>
+    </schema>
+  </schemalist>
+</gconfschemafile>
