@@ -1,6 +1,7 @@
 2003-09-06 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss: Uncomment everything that used to segfault (Gconf and
 	treemodel modification) aka ruby/Gnome2 0.6.0 rules
+	* rbrss: Threaded news fetching and checked last-modified
 
 2003-08-27 Pascal Terjan <CMoi@tuxfamily.org>
 	* rbrss: Send a User-Agent in HTTP requests

@@ -14,4 +14,4 @@
 - add easy way to navigate (next unread...)
 - display description somewhere else than in the tree. At the bottom ? On the
   right before the list of news ?
-- use last modification time and HEAD requests
+- use HEAD requests to get last-modified instead of GET

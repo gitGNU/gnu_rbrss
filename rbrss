@@ -1,5 +1,5 @@
 #!/usr/bin/ruby 
-# $Id: rbrss,v 1.4 2003/09/06 13:42:45 pterjan Exp $
+# $Id: rbrss,v 1.5 2003/09/06 17:36:14 pterjan Exp $
 # Copyright (C) 2003      Pascal Terjan <CMoi@tuxfamily.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -40,6 +40,8 @@ class RbRSS
 	}
   end
   def initialize
+    @last_modified = {}
+    @models = {}
 	@gconf_client = GConf::Client.new
 	@conf={}
 	@conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
@@ -87,17 +89,17 @@ class RbRSS
   end
 
   def update_site(iter, event)
+    Thread.new {
+      do_update_site(iter, event)
+    }
+  end
+
+  def do_update_site(iter, event)
 	url = @model.get_value(iter, 2) || return
 	timer = @model.get_value(iter, 4)
 	refresh = @model.get_value(iter, 5)
 	if(timer && timer!=0)
 	  Gtk.timeout_remove(timer)
-	end
-	@models = {} unless @models
-	model = @models[url]
-	if model==nil
-	  model = Gtk::TreeStore.new(String, String, String)
-	  @models[url]=model
 	end
 	uri = URI.parse(url)
 	h = Net::HTTP.new(uri.host)
@@ -107,8 +109,32 @@ class RbRSS
 	  puts "You are not connected, the server is down or the adress is wrong."
 	  return
 	end
+    resp.each_header{
+      |header, val|
+      if header=="last-modified"
+        if @last_modified[url] == val
+          if(refresh)
+            timer = Gtk.timeout_add(refresh*60000){
+              update_site(iter, nil)
+              false
+            }
+            @model.set_value(iter, 4, timer)
+          end
+          return
+        end
+        @last_modified[url] = val
+      end
+    }
 	rss = Document.new data
 	# Should check what needs to be added, meanwhile...
+	@models = {} unless @models
+	model = @models[url]
+	if model==nil
+	  model = Gtk::TreeStore.new(String, String, String)
+	  @models[url]=model
+	  tv = @glade.get_widget("treeview3")
+	  tv.set_model(@models[url]) if tv.model==nil 
+	end
 	model.clear
 	rss.elements.each("//*/item"){
 	  |element|
@@ -126,7 +152,6 @@ class RbRSS
 # Segfault with Ruby/Gnome2 0.5.0
 	  @model.set_value(iter, 4, timer)
 	end
-	return model
   end
 
   def fetch_feed_info(url)
@@ -174,10 +199,7 @@ class RbRSS
   def on_refreshbutton_released(widget)
 	treeview = @glade.get_widget("treeview2")
 	iter = treeview.selection.selected || return
-	if model = update_site(iter, nil)
-	  tv = @glade.get_widget("treeview3")
-	  tv.set_model(model)
-	end
+	update_site(iter, nil)
   end
 
   #######################
@@ -230,12 +252,14 @@ class RbRSS
   end
 
   def on_feed_activated(widget,plop)
-	set_feed_selected(TRUE)
 	iter = widget.selection.selected || return
-	if model = update_site(iter, plop)
-	  tv = @glade.get_widget("treeview3")
-	  tv.set_model(model)
-	end
+	set_feed_selected(TRUE)
+	url = @model.get_value(iter, 2) || return
+    tv = @glade.get_widget("treeview3")
+    if (@models)
+	  tv.set_model(@models[url])
+    end
+    update_site(iter, nil)
 	return
   end
 
