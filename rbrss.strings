@@ -7,7 +7,7 @@
 
 gchar *s = N_("rbRSS");
 gchar *s = N_("_Remove");
-gchar *s = N_("Copyright (c) 2003 Pascal Terjan <CMoi@tuxfamily.org>");
+gchar *s = N_("Copyright (c) 2003-2004 Pascal Terjan <CMoi@tuxfamily.org>");
 gchar *s = N_("RbRSS is a RSS feeds aggegator, written using Ruby/Gnome2 and Glade. ");
 gchar *s = N_("translator_credits");
 gchar *s = N_("Add a new RSS source");
