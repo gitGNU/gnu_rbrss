@@ -9,7 +9,7 @@ module RbRSS
       end
 
       def load_conf
-        @gconf_client = GConf::Client.new
+        @gconf_client = GConf::Client.default
         @conf={}
         @conf["auto_save"] = @gconf_client.get "/apps/rbrss/auto_save"
         @conf["cache_dir"] = @gconf_client.get "/apps/rbrss/cache_dir"
