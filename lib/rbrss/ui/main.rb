@@ -280,7 +280,7 @@ module RbRSS
           d-=1
         end
         begin
-          @config=Document.new "<?xml version=\"1.0\" encoding=\"iso-8859-15\"?>\n<config>"+s+"</config>"
+          @config=Document.new "<?xml version=\"1.0\" ?>\n<config>"+s+"</config>"
         rescue REXML::ParseException
           puts "Invalid XML : "+s
         end
