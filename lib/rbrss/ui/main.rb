@@ -19,15 +19,16 @@ module RbRSS
       def load_feeds
         @models = {}
         @last_modified = {}
+        config_file = File.join(ENV["HOME"], '.rbrss', 'config.xml')
         begin
-          @configfile = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+          @configfile = Document.new File.new(config_file)
         rescue
           begin
             Dir.mkdir(ENV["HOME"]+'/.rbrss')
           rescue Errno::EEXIST
           end
-          FileUtils::copy_file("/usr/share/rbrss/config.xml", ENV["HOME"]+'/.rbrss/config.xml')
-          @configfile = Document.new File.new(ENV["HOME"]+'/.rbrss/config.xml')
+          FileUtils::copy_file(File.join(RbRSS::Config::DATA_DIR, 'config.xml'), config_file)
+          @configfile = Document.new File.new(config_file)
           # If it still fails, let's violently exit :]
         end
         @model = Gtk::TreeStore.new(String, String, String, String, Integer, Integer) #Name, Description, URL, site/category, timer, refresh time
