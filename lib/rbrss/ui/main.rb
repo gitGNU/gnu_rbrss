@@ -1,3 +1,6 @@
+require 'rss/1.0'
+require 'rss/2.0'
+
 module RbRSS
   module UI
     class MainApp < GladeBase 
@@ -90,7 +93,7 @@ module RbRSS
             @last_modified[url] = val
           end
         }
-        rss = Document.new data
+        rss = RSS::Parser.parse(data, false)
         # Should check what needs to be added, meanwhile...
         @models = {} unless @models
         model = @models[url]
@@ -100,13 +103,13 @@ module RbRSS
           @treeview3.set_model(@models[url]) if @treeview3.model==nil 
         end
         model.clear
-        rss.elements.each("//*/item"){
+        rss.items.each{
           |element|
-          element.elements['title'] || next
+          element.title || next
           n=model.append(nil)
-          n.set_value(0, element.elements['title'].text)
-          element.elements['description'] && n.set_value(1, element.elements['description'].text)
-          element.elements['url'] && n.set_value(2, element.elements['url'].text)
+          n.set_value(0, element.title)
+          element.description && n.set_value(1, element.description)
+          element.link && n.set_value(2, element.link)
         }
         if(refresh)
           timer = Gtk.timeout_add(refresh*60000){
@@ -127,17 +130,12 @@ module RbRSS
           puts "Unable to connect to grab specified URL"
           return nil
         end
-        rss = Document.new data
-        rss.elements.each("//*/channel"){
-          |element|
-          info = {}
-          element.elements.each{
-            |field| 
-            info[field.name] = field.text
-          }
-          return info
-        }
-        return {}
+        rss = RSS::Parser.parse(data, false)
+        info = {}
+	info['title'] = rss.channel.title
+	info['link'] = rss.channel.link
+	info['description'] = rss.channel.description
+        return info
       end
 
       ###################
