@@ -284,7 +284,7 @@ module RbRSS
         rescue REXML::ParseException
           puts "Invalid XML : "+s
         end
-        #	on_save1_activate(nil) if(@conf["auto_save"])
+        on_save1_activate(nil) if(@conf["auto_save"])
       end
 
       ##############
