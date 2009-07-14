@@ -18,7 +18,7 @@ class FeedList
 	  n=model.append(node)
 	  n.set_value(0, element.elements['name'].text)
 	  element.elements['description'] && n.set_value(1, element.elements['description'].text)
-	  element.elements['rss'] && n.set_value(2, element.elements['rss'].text)
+	  element.elements['url'] && n.set_value(2, element.elements['url'].text)
 	  n.set_value(3, element.expanded_name)		
 	  element.elements['refresh'] && n.set_value(5, element.elements['refresh'].text.to_i)
 	  element.expanded_name=="category" && add_sites(element, model, n)
