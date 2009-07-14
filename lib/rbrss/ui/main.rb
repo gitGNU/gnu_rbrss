@@ -27,7 +27,7 @@ module RbRSS
           @configfile = Document.new File.new(config_file)
         rescue
           begin
-            Dir.mkdir(ENV["HOME"]+'/.rbrss')
+            Dir.mkdir(File.join(ENV["HOME"], '.rbrss'))
           rescue Errno::EEXIST
           end
           FileUtils::copy_file(File.join(RbRSS::Config::DATA_DIR, 'config.xml'), config_file)
@@ -292,7 +292,7 @@ module RbRSS
       ##############
 
       def on_save1_activate(widget)
-        @config.write(File.new(ENV["HOME"]+'/.rbrss/config.xml','w'))
+        @config.write(File.new(File.join(ENV["HOME"], '.rbrss', 'config.xml'),'w'))
       end
 
       def on_preferences1_activate(widget)
